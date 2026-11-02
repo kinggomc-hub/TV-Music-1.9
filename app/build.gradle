@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.lyricplayer.tv'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.lyricplayer.tv'
+        minSdk 21
+        // 29 로 둔 이유: 안드로이드 10/11 이상에서도 USB·SD 경로(/storage/XXXX)를 파일 관리자 없이 직접 읽을 수 있게 하는
+        // 'requestLegacyExternalStorage' 가 targetSdk 29 이하에서만 적용되기 때문 (직접 설치(사이드로드)용 앱이라 상관없음)
+        targetSdk 29
+        versionCode 7
+        versionName '1.9-tv-lyric-fx'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'ExpiredTargetSdkVersion', 'OldTargetApi'
+    }
+}
+
+dependencies {
+    // USB 저장장치 직접 접근 (FAT32). https://github.com/magnusja/libaums
+    implementation 'me.jahnen.libaums:core:0.10.0'
+}
